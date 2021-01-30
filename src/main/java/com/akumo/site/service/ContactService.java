@@ -26,7 +26,7 @@ public class ContactService {
     private ContactRepository contactRepository;
 
     public synchronized String saveOrUpdateEmail(EmailDto email) throws URISyntaxException, IOException {
-        var file = new File(System.getProperty("user.dir") + File.separator + "email.txt");
+        File file = new File(System.getProperty("user.dir") + File.separator + "email.txt");
         Files.write(Paths.get(file.getAbsolutePath()), email.toString().getBytes(), StandardOpenOption.APPEND);
         return "success";
 
@@ -41,7 +41,7 @@ public class ContactService {
                 .name(contact.getName())
                 .build());
 
-        var file = new File(System.getProperty("user.dir") + File.separator + "bd.txt");
+        File file = new File(System.getProperty("user.dir") + File.separator + "bd.txt");
         Files.write(Paths.get(file.getAbsolutePath()), contact.toString().getBytes(), StandardOpenOption.APPEND);
 
     }
@@ -62,8 +62,8 @@ public class ContactService {
     }
 
     public List<EmailDto> getEmails() throws IOException {
-        var file = new File(System.getProperty("user.dir") + File.separator + "email.txt");
-        var content = Files.readString(Paths.get(file.getAbsolutePath())).split("\n");
+        File file = new File(System.getProperty("user.dir") + File.separator + "email.txt");
+        String[] content = Files.readString(Paths.get(file.getAbsolutePath())).split("\n");
         return Arrays.stream(content).map(EmailDto::of).collect(Collectors.toList());
 
     }

@@ -1,5 +1,6 @@
 package com.akumo.site.resource;
 
+import com.akumo.site.domain.entities.Contact;
 import com.akumo.site.resource.model.ContactDto;
 import com.akumo.site.resource.model.EmailDto;
 import com.akumo.site.service.ContactService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -33,12 +35,12 @@ public class ContactController {
 
     @GetMapping("/contact/{id}")
     private ContactDto getById(@PathVariable(name = "id") long id) {
-        var opt = contactService.getById(id);
+        Optional<Contact> opt = contactService.getById(id);
         if (opt.isEmpty()) {
             return new ContactDto();
 
         } else {
-            var contact = opt.get();
+            Contact contact = opt.get();
             return ContactDto.of(contact.getId(), contact.getEmail(), contact.getName(), contact.getSubject(), contact.getMessage());
 
         }
