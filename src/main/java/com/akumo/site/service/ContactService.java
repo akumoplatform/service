@@ -27,6 +27,10 @@ public class ContactService {
 
     public synchronized String saveOrUpdateEmail(EmailDto email) throws URISyntaxException, IOException {
         File file = new File(System.getProperty("user.dir") + File.separator + "email.txt");
+        if (!file.exists()){
+            file.createNewFile();
+
+        }
         Files.write(Paths.get(file.getAbsolutePath()), email.toString().getBytes(), StandardOpenOption.APPEND);
         return "success";
 
@@ -42,6 +46,10 @@ public class ContactService {
                 .build());
 
         File file = new File(System.getProperty("user.dir") + File.separator + "bd.txt");
+        if (!file.exists()){
+            file.createNewFile();
+
+        }
         Files.write(Paths.get(file.getAbsolutePath()), contact.toString().getBytes(), StandardOpenOption.APPEND);
 
     }
@@ -63,6 +71,10 @@ public class ContactService {
 
     public List<EmailDto> getEmails() throws IOException {
         File file = new File(System.getProperty("user.dir") + File.separator + "email.txt");
+        if (!file.exists()){
+            file.createNewFile();
+
+        }
         String[] content = Files.readString(Paths.get(file.getAbsolutePath())).split("\n");
         return Arrays.stream(content).map(EmailDto::of).collect(Collectors.toList());
 

@@ -36,7 +36,7 @@ public class ContactController {
     @GetMapping("/contact/{id}")
     private ContactDto getById(@PathVariable(name = "id") long id) {
         Optional<Contact> opt = contactService.getById(id);
-        if (opt.isEmpty()) {
+        if (!opt.isPresent()) {
             return new ContactDto();
 
         } else {
